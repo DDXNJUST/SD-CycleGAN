@@ -1,1 +1,1 @@
-# MGUP-Net
+# SD-CycleGAN
