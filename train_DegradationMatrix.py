@@ -67,7 +67,7 @@ def train(config, device, set, test_set):
 
     print("Training start ...")
 
-    for e in range(config.epochs):
+    for e in range(1000):
 
         print("Epoch {} started ...".format(e))
         print("Training Discriminator ... Intermediate result can be found in " + config.result_dir)
