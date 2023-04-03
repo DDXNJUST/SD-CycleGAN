@@ -100,7 +100,6 @@ def train(config, device, set, test_set):
             fake_A2B = GA2B(batch_C, batch_A)
             fake_B2A_ms = GB2A_ms(fake_A2B)
             D_fake_loss_A_ms = DA_ms(fake_B2A_ms).mean()
-            # pdb.set_trace()
             GP_A_ms = GP_Afuc_ms(DA_ms, batch_A_ori, fake_B2A_ms, config, device)
             loss_OTDisc_A_ms = -D_real_loss_A_ms + D_fake_loss_A_ms + GP_A_ms
             loss_OTDisc_A_ms.backward(retain_graph=True)
@@ -140,7 +139,11 @@ def train(config, device, set, test_set):
             optimizer_GA2B.zero_grad()
             fake_A2B = GA2B(batch_C, batch_A)
             fake_B2A_ms = GB2A_ms(fake_A2B)
+            loss_OTDIcs_B_ms = -DA_ms(fake_B2A_ms).mean()
+            loss_OTDIcs_B_ms.backward(retain_graph=True)
             fake_B2A = GB2A(fake_A2B)
+            loss_OTDIcs_B = -DA(fake_B2A).mean()
+            loss_OTDIcs_B.backward(retain_graph=True)
 
             pan_loss = 50. * loss(batch_C, fake_B2A)
             ms_loss = 30. * loss(batch_A_ori, fake_B2A_ms)
